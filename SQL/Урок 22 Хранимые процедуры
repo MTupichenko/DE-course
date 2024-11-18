@@ -1,0 +1,51 @@
+/*Цель: Написать хранимую процедуру, которая анализирует количество товаров на складе и выводит для каждого товара общее количество.
+
+Описание:
+Процедура должна:
+
+Подсчитать общее количество каждого товара на складе.
+Результат сохранить в таблице ProductInventorySummary, где будут храниться ProductID и TotalQuantity (общее количество данного товара на складе).
+Для обработки данных использовать цикл WHILE.
+
+Используемые таблицы:
+Production.ProductInventory: Содержит данные о наличии товаров на складе, включая ProductID и Quantity.
+
+Логика:
+Для каждого товара нужно вычислить общее количество с учетом всех записей в таблице ProductInventory.
+Создаем таблицу для хранения результатов.
+Затем, используя цикл, обновляем таблицу с общими данными для каждого товара. */
+
+
+CREATE PROCEDURE dbo.Fill_ProductInventorySummary
+AS 
+BEGIN 
+IF OBJECT_ID ('dbo.ProductInventorySummary', 'U') IS NOT NULL --проверяем есть ли у нас уже такая таблица, если да - удаляем её
+BEGIN 
+	DROP TABLE dbo.ProductInventorySummary
+END
+
+CREATE TABLE ProductInventorySummary (ProductID INT, TotalQuantity INT)
+
+DECLARE @ProductID INT
+DECLARE @MaxProductID INT 
+DECLARE @TotalQuantity INT
+
+SELECT @MaxProductID = MAX(pp.ProductID) FROM Production.ProductInventory pp
+SET @ProductID = 1
+
+WHILE @ProductID <= @MaxProductID
+	BEGIN
+	SELECT @TotalQuantity = SUM (pp.Quantity)	
+	FROM Production.ProductInventory pp
+	WHERE pp.ProductID =@ProductID
+	IF @TotalQuantity IS NOT NULL --Если у нас нашлись значения в @TotalQuantity, вставляем данные в таблицу
+		BEGIN
+		INSERT INTO ProductInventorySummary (ProductID, TotalQuantity)
+		VALUES (@ProductID, @TotalQuantity)
+		END
+	SET @ProductID = @ProductID +1
+	END
+END
+
+EXEC dbo.Fill_ProductInventorySummary
+SELECT * FROM dbo.ProductInventorySummary
