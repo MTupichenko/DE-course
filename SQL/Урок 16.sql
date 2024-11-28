@@ -1,20 +1,20 @@
-/*Ηΰδΰνθε 1
+/*Γ‡Γ Γ¤Γ Γ­Γ¨Γ¥ 1
 SELECT * 
 FROM [Sales].[Customer]
 WHERE TerritoryID > 5
 ORDER BY TerritoryID DESC*/
 
-/*Ηΰδΰνθε 2
+/*Γ‡Γ Γ¤Γ Γ­Γ¨Γ¥ 2
 SELECT TOP 10 [ProductID],[Name], [ListPrice]
 FROM [Production].[Product]
 ORDER BY [ListPrice] DESC*/
 
-/* Ηΰδΰνθε 3
+/* Γ‡Γ Γ¤Γ Γ­Γ¨Γ¥ 3
 SELECT [BusinessEntityID], [FirstName], [LastName] 
 FROM Person.Person
 WHERE [LastName] LIKE 'M%'*/
 
-/*Ηΰδΰνθε 3=4
+/*Γ‡Γ Γ¤Γ Γ­Γ¨Γ¥ 3=4
 CREATE TABLE TopCustomers (
 	CustomerID INT PRIMARY KEY, 
 	FirstName NVARCHAR(30), 
@@ -29,7 +29,7 @@ VALUES
 SELECT * FROM TopCustomers
 ORDER BY LastName ASC*/
 
-/* Ηΰδΰνθε 5
+/* Γ‡Γ Γ¤Γ Γ­Γ¨Γ¥ 5
 SELECT [TerritoryID], AVG(TotalDue) AS [AverageOrderAmount] FROM [Sales].[SalesOrderHeader]
 WHERE [ShipDate] > [OrderDate]
 GROUP BY [TerritoryID]*/
